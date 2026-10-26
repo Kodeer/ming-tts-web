@@ -25,17 +25,28 @@ $base64 = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("Kodeer:$tok
 $headers = @{ Authorization = "Basic $base64"; "User-Agent" = "git-push-script" }
 $body = @{ name = $repoName; description = $repoDesc; private = $true; auto_init = $false } | ConvertTo-Json
 
-Write-Host "Creating private repo '$repoName' ..." -ForegroundColor Cyan
+Write-Host "Checking if repo '$repoName' already exists ..." -ForegroundColor Cyan
+$repoExists = $false
 try {
-    $resp = Invoke-RestMethod -Uri "https://api.github.com/user/repos" -Method Post -Headers $headers -Body $body -ContentType "application/json"
-    Write-Host "Repo created: $($resp.html_url)" -ForegroundColor Green
-} catch {
-    $msg = $_.ErrorDetails.Message
-    if ($msg -match 'already exists') {
-        Write-Host "Repo already exists; continuing to push." -ForegroundColor Yellow
-    } else {
-        Write-Host "Failed to create repo: $msg" -ForegroundColor Red
-        exit 1
+    $check = Invoke-RestMethod -Uri "https://api.github.com/repos/Kodeer/$repoName" -Headers $headers -Method Get
+    $repoExists = ($check -and $check.full_name -eq "Kodeer/$repoName")
+} catch { $repoExists = $false }
+
+if ($repoExists) {
+    Write-Host "Repo already exists; skipping creation." -ForegroundColor Yellow
+} else {
+    Write-Host "Creating private repo '$repoName' ..." -ForegroundColor Cyan
+    try {
+        $resp = Invoke-RestMethod -Uri "https://api.github.com/user/repos" -Method Post -Headers $headers -Body $body -ContentType "application/json"
+        Write-Host "Repo created: $($resp.html_url)" -ForegroundColor Green
+    } catch {
+        $msg = $_.ErrorDetails.Message
+        if ($msg -match 'already exists') {
+            Write-Host "Repo already exists; continuing to push." -ForegroundColor Yellow
+        } else {
+            Write-Host "Failed to create repo: $msg" -ForegroundColor Red
+            exit 1
+        }
     }
 }
 
