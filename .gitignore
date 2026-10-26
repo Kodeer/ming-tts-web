@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Virtual environment
+venv/
+.venv/
+
+# Model weights (large; fetched via download_model.bat)
+models/
+
+# Runtime artifacts
+outputs/
+uploads/
+*.log
+_server.log
+
+# OS / editor
+Thumbs.db
+.DS_Store
+.vscode/

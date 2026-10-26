@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ming-3.0-tts · Web TTS</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🎙️</span>
+    <div>
+      <h1>Ming-3.0-tts</h1>
+      <p class="sub">Open-source multilingual TTS · voice cloning · voice design</p>
+    </div>
+  </div>
+  <div id="status" class="status">checking…</div>
+</header>
+
+<main class="layout">
+  <!-- LEFT: text + controls -->
+  <section class="panel">
+    <h2>1 · Text to speak</h2>
+
+    <label class="field">
+      <span>Text</span>
+      <textarea id="text" rows="6" placeholder="Type the text to synthesize, or upload a .txt file…"></textarea>
+    </label>
+
+    <div class="row">
+      <label class="field grow">
+        <span>Or load a text file</span>
+        <input type="file" id="txtFile" accept=".txt,.md" />
+      </label>
+      <button id="loadTxt" class="ghost" type="button">Load</button>
+    </div>
+
+    <h2>2 · Task &amp; language</h2>
+    <div class="row">
+      <label class="field grow">
+        <span>Task</span>
+        <select id="task"></select>
+      </label>
+      <label class="field grow">
+        <span>Language</span>
+        <select id="language"></select>
+      </label>
+    </div>
+
+    <div id="dynamicControls"></div>
+
+    <h2>3 · Voice cloning (reference audio)</h2>
+    <p class="hint">Upload a short reference clip and its transcript to clone that voice. Required for TTS / Multilingual / Emotion / Dialect / Basic.</p>
+    <div class="row">
+      <label class="field grow">
+        <span>Reference audio (wav/mp3…)</span>
+        <input type="file" id="promptAudio" accept="audio/*" />
+      </label>
+      <button id="uploadPrompt" class="ghost" type="button">Upload</button>
+    </div>
+    <div id="promptStatus" class="hint"></div>
+    <label class="field">
+      <span>Reference transcript (prompt_text)</span>
+      <input type="text" id="promptText" placeholder="Exact text spoken in the reference clip" />
+    </label>
+    <label class="check">
+      <input type="checkbox" id="useSpkEmb" checked />
+      <span>Use speaker embedding from reference (voice cloning)</span>
+    </label>
+
+    <h2>4 · Advanced</h2>
+    <div class="row">
+      <label class="field grow">
+        <span>cfg (<span id="cfgVal"></span>)</span>
+        <input type="range" id="cfg" min="1" max="4" step="0.1" />
+      </label>
+      <label class="field grow">
+        <span>sigma (<span id="sigmaVal"></span>)</span>
+        <input type="range" id="sigma" min="0.1" max="1" step="0.05" />
+      </label>
+    </div>
+    <div class="row">
+      <label class="field grow">
+        <span>temperature (<span id="tempVal"></span>)</span>
+        <input type="range" id="temperature" min="0" max="1" step="0.05" />
+      </label>
+      <label class="field grow">
+        <span>max_length (<span id="maxLenVal"></span>)</span>
+        <input type="range" id="maxLength" min="8" max="60" step="1" />
+      </label>
+    </div>
+    <label class="check"><input type="checkbox" id="noTrim" /><span>Keep trailing silence</span></label>
+    <label class="check"><input type="checkbox" id="rawText" /><span>Raw text (no split/normalization)</span></label>
+
+    <div class="actions">
+      <button id="speak" class="primary" type="button">🔊 Speak</button>
+      <button id="download" class="secondary" type="button" disabled>⬇ Download WAV</button>
+    </div>
+    <div id="progress" class="progress hidden"><div class="bar"></div><span class="msg">Generating…</span></div>
+    <div id="error" class="error hidden"></div>
+  </section>
+
+  <!-- RIGHT: player + tags -->
+  <aside class="panel">
+    <h2>Output</h2>
+    <audio id="player" controls></audio>
+    <div id="meta" class="meta"></div>
+
+    <h2>Paralinguistic tags</h2>
+    <p class="hint">Click to insert inline tags into the text (e.g. <code>[Laughter]</code>).</p>
+    <div id="tags" class="tags"></div>
+
+    <h2>Quick presets</h2>
+    <div class="presets">
+      <button class="ghost" data-preset="clone">Zero-shot clone</button>
+      <button class="ghost" data-preset="design">Voice design</button>
+      <button class="ghost" data-preset="freeform">Free-form</button>
+      <button class="ghost" data-preset="builtin">Built-in voice</button>
+      <button class="ghost" data-preset="emotion">Emotion</button>
+      <button class="ghost" data-preset="multilingual">Multilingual</button>
+    </div>
+  </aside>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>
