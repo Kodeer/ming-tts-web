@@ -113,7 +113,7 @@ function renderDynamicControls() {
   if (controls.includes("style")) {
     const ta = document.createElement("textarea");
     ta.id = "style"; ta.rows = 3;
-    ta.placeholder = "Describe the voice, e.g. '成熟沉稳的男性纪录片旁白，吐字清晰，节奏舒缓。'";
+    ta.placeholder = "Describe the voice, e.g. 'A mature, steady male documentary narrator with clear enunciation and a relaxed pace.'";
     add("Voice design style", ta);
   }
   if (controls.includes("instruction")) {
@@ -128,13 +128,22 @@ function renderDynamicControls() {
   }
 }
 
-function selectFrom(id, values, labels) {
+function selectFrom(id, items, labels) {
   const sel = document.createElement("select");
   sel.id = id;
-  values.forEach((v, i) => {
+  // ``items`` may be a list of strings or {value,label} dicts. When dicts are
+  // passed, ``labels`` is ignored and the dict label is used for display while
+  // the dict value is sent to the model.
+  const useDicts = items.length && typeof items[0] === "object";
+  items.forEach((it, i) => {
     const o = document.createElement("option");
-    o.value = v;
-    o.textContent = labels ? labels[i] : v;
+    if (useDicts) {
+      o.value = it.value;
+      o.textContent = it.label;
+    } else {
+      o.value = it;
+      o.textContent = labels ? labels[i] : it;
+    }
     sel.appendChild(o);
   });
   return sel;

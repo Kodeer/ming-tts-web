@@ -28,21 +28,44 @@ TASKS = [
 
 # Target languages. Chinese/English work without ``language_id``; the other
 # five are required for MULTILINGUAL.
+# Labels are English; the ``value`` is what the model expects.
 LANGUAGES = [
-    {"value": "zh", "label": "Chinese (中文)"},
+    {"value": "zh", "label": "Chinese"},
     {"value": "en", "label": "English"},
-    {"value": "ja", "label": "Japanese (日本語)"},
-    {"value": "ko", "label": "Korean (한국어)"},
-    {"value": "de", "label": "German (Deutsch)"},
-    {"value": "fr", "label": "French (Français)"},
-    {"value": "es", "label": "Spanish (Español)"},
+    {"value": "ja", "label": "Japanese"},
+    {"value": "ko", "label": "Korean"},
+    {"value": "de", "label": "German"},
+    {"value": "fr", "label": "French"},
+    {"value": "es", "label": "Spanish"},
 ]
 
-EMOTIONS = ["高兴", "悲伤", "愤怒", "恐惧", "厌恶", "惊讶", "中性"]
+# ``value`` is the emotion token the model expects; ``label`` is English.
+EMOTIONS = [
+    {"value": "高兴", "label": "Happy"},
+    {"value": "悲伤", "label": "Sad"},
+    {"value": "愤怒", "label": "Angry"},
+    {"value": "恐惧", "label": "Fearful"},
+    {"value": "厌恶", "label": "Disgusted"},
+    {"value": "惊讶", "label": "Surprised"},
+    {"value": "中性", "label": "Neutral"},
+]
 
-SPEED_VALUES = ["慢速", "中速", "快速"]
-PITCH_VALUES = ["低", "中", "高"]
-VOLUME_VALUES = ["低", "中", "高"]
+# ``value`` is the speed/pitch/volume token the model expects; ``label`` is English.
+SPEED_VALUES = [
+    {"value": "慢速", "label": "Slow"},
+    {"value": "中速", "label": "Medium"},
+    {"value": "快速", "label": "Fast"},
+]
+PITCH_VALUES = [
+    {"value": "低", "label": "Low"},
+    {"value": "中", "label": "Medium"},
+    {"value": "高", "label": "High"},
+]
+VOLUME_VALUES = [
+    {"value": "低", "label": "Low"},
+    {"value": "中", "label": "Medium"},
+    {"value": "高", "label": "High"},
+]
 DIALECT_VALUES = ["cantonese", "chuanyu dialect"]
 
 # Inline paralinguistic tags (case-sensitive, include the brackets). They are
@@ -64,14 +87,14 @@ BUILTIN_VOICES = [
     {"value": "US_Emma", "label": "US_Emma (American female, assistant)"},
     {"value": "UK_George", "label": "UK_George (British male, audiobook)"},
     {"value": "UK_Charlotte", "label": "UK_Charlotte (British female, measured)"},
-    # Recommended Chinese
-    {"value": "灵小柔", "label": "灵小柔 (Chinese female, sweet/clear)"},
-    {"value": "灵楷", "label": "灵楷 (Chinese male, warm/resonant)"},
-    {"value": "灵小安", "label": "灵小安 (Chinese female, teen)"},
-    {"value": "灵语汐", "label": "灵语汐 (Chinese female, bright)"},
-    {"value": "灵朗", "label": "灵朗 (Chinese male, boyfriend)"},
-    {"value": "灵叙柔", "label": "灵叙柔 (Chinese female, news anchor)"},
-    {"value": "灵卓然", "label": "灵卓然 (Chinese male, documentary)"},
+    # Recommended Chinese (value is the voice id; label is English)
+    {"value": "灵小柔", "label": "Ling Xiaorou (Chinese female, sweet/clear)"},
+    {"value": "灵楷", "label": "Ling Kai (Chinese male, warm/resonant)"},
+    {"value": "灵小安", "label": "Ling Xiaoan (Chinese female, teen)"},
+    {"value": "灵语汐", "label": "Ling Yuxi (Chinese female, bright)"},
+    {"value": "灵朗", "label": "Ling Lang (Chinese male, boyfriend)"},
+    {"value": "灵叙柔", "label": "Ling Xurou (Chinese female, news anchor)"},
+    {"value": "灵卓然", "label": "Ling Zhuoran (Chinese male, documentary)"},
 ]
 
 # Default generation parameters (see infer.py).
