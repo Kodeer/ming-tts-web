@@ -29,8 +29,8 @@ project, so the process is intentionally lightweight.
 - The `Ming-3.0-tts` engine lives in a **submodule** — do not commit its files
   directly into this repo.
 - Run the app and confirm synthesis still works on GPU before opening a PR.
-- Open an issue or a pull request describing the change. Since this repo is
-  private, please coordinate with the owner (`Kodeer`) before large changes.
+- Open an issue or a pull request describing the change. This repo is public, but
+  please coordinate with the owner (`Kodeer`) before large changes.
 
 ## Reporting issues
 
